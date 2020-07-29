@@ -8,5 +8,6 @@ public interface EmployeeService {
 
     List<Employee> findAllEmployees();
     Employee findEmployeeById(int id);
-    List<Employee> findEmployeeByGender(String gender);
+    List<Employee> findEmployeesByGender(String gender);
+    List<Employee> findEmolyeesByPage(int page , int pageSize);
 }

@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +28,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> findEmployeeByGender(String gender) {
+    public List<Employee> findEmployeesByGender(String gender) {
         return employeeRepository.findByGender(gender);
     }
+
+    @Override
+    public List<Employee> findEmolyeesByPage(int page, int pageSize) {
+        return employeeRepository.findAll(PageRequest.of(page , pageSize)).getContent();
+    }
+
+
 }
