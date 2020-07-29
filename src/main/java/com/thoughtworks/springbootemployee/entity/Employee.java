@@ -22,6 +22,10 @@ public class Employee {
 
     }
 
+    public Employee(int id) {
+
+    }
+
     public Integer getId() {
         return id;
     }

@@ -1,10 +1,15 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.oracle.jrockit.jfr.ValueDefinition;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,8 +38,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> findEmolyeesByPage(int page, int pageSize) {
-        return employeeRepository.findAll(PageRequest.of(page , pageSize)).getContent();
+    public List<Employee> findEmolyeesByPage(Pageable pageable) {
+       return new ArrayList<>();
     }
 
 
