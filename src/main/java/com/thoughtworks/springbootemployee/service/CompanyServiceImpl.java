@@ -1,8 +1,12 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.exception.AddWrongException;
+import com.thoughtworks.springbootemployee.exception.NotFoundException;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import javassist.compiler.NoFieldException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +23,8 @@ public class CompanyServiceImpl  implements  CompanyService{
 
     @Override
     public Company findCompanyById(int companyId) {
-        return companyRepository.findById(companyId).get();
+
+        return companyRepository.findById(companyId).orElseThrow(NotFoundException::new);
     }
 
     @Override
@@ -29,7 +34,11 @@ public class CompanyServiceImpl  implements  CompanyService{
 
     @Override
     public Company addCompany(Company company) {
-        return companyRepository.save(company);
+        Company companyResult = companyRepository.save(company);
+        if (companyResult == null) {
+            new AddWrongException();
+        }
+        return companyResult;
     }
 
     @Override
@@ -38,8 +47,8 @@ public class CompanyServiceImpl  implements  CompanyService{
 }
 
     @Override
-    public List<Employee> findEmployeesByCompanyId(int companyId) {
-        return companyRepository.findById(companyId).get().getEmployees();
+    public List<Employee> findEmployeesByCompanyId(int companyId){
+        return companyRepository.findById(companyId).orElseThrow(NotFoundException::new).getEmployees();
     }
 
     @Override

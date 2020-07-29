@@ -22,6 +22,13 @@ public class Employee {
 
     }
 
+    public Employee(String name, Integer age, String gender, Company company) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.company = company;
+    }
+
     public Employee(int id) {
 
     }

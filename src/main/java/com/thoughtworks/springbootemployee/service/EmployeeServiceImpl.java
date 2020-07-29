@@ -2,6 +2,8 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.oracle.jrockit.jfr.ValueDefinition;
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.exception.AddWrongException;
+import com.thoughtworks.springbootemployee.exception.NotFoundException;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,14 +24,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    @Override
-    public List<Employee> findAllEmployees() {
-        return employeeRepository.findAll();
-    }
 
     @Override
     public Employee findEmployeeById(int id) {
-        return employeeRepository.findById(id).get();
+        return employeeRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @Override
@@ -44,7 +42,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+        Employee employeeResult =  employeeRepository.save(employee);
+        if (employeeResult == null) {
+            new AddWrongException();
+        }
+        return employeeResult;
     }
 
     @Override
