@@ -13,5 +13,6 @@ public interface EmployeeService {
     List<Employee> findEmployeesByGender(String gender);
     List<Employee> findEmolyeesByPage(Pageable pageable);
     Employee addEmployee(Employee employee);
-
+    Employee updateEmployee(Employee employee);
+    void deleteEmployee(int id);
 }

@@ -2,10 +2,10 @@ DROP TABLE IF EXISTS employee;
 DROP TABLE IF EXISTS company;
 CREATE TABLE employee (
   id INT AUTO_INCREMENT  PRIMARY KEY,
-  name VARCHAR(100) NOT NULL,
-  age INT NOT NULL,
-  gender VARCHAR(10) DEFAULT NULL,
-  company_id INT Not NULL
+  name VARCHAR(100),
+  age INT,
+  gender VARCHAR(10)  ,
+  company_id INT
 );
 INSERT INTO employee (name, age, gender,company_id) VALUES
  ('chengcheng','54','male',1),
