@@ -7,18 +7,22 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class EmployeeServiceImpl implements EmployeeService{
+public class EmployeeServiceImpl implements EmployeeService {
 
 
     private final EmployeeRepository employeeRepository;
 
     public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
-            this.employeeRepository = employeeRepository;
-        }
+        this.employeeRepository = employeeRepository;
+    }
 
-        @Override
-        public List<Employee> findAllEmployees() {
-            System.out.println("123");
-            return employeeRepository.findAll();
+    @Override
+    public List<Employee> findAllEmployees() {
+        return employeeRepository.findAll();
+    }
+
+    @Override
+    public Employee findEmployeeById(int id) {
+        return employeeRepository.findById(id).get();
     }
 }
