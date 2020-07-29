@@ -5,7 +5,7 @@ CREATE TABLE employee (
   name VARCHAR(100) NOT NULL,
   age INT NOT NULL,
   gender VARCHAR(10) DEFAULT NULL,
-  company_id INT Not NULL
+  company_id INT
 );
 INSERT INTO employee (name, age, gender,company_id) VALUES
  ('chengcheng','54','male',1),

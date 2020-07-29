@@ -39,7 +39,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> findEmolyeesByPage(Pageable pageable) {
-       return new ArrayList<>();
+       return employeeRepository.findAll(pageable).getContent();
+    }
+
+    @Override
+    public Employee addEmployee(Employee employee) {
+        return employeeRepository.save(employee);
     }
 
 

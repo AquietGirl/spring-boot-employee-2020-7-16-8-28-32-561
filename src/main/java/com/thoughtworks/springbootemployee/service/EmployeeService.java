@@ -12,4 +12,6 @@ public interface EmployeeService {
     Employee findEmployeeById(int id);
     List<Employee> findEmployeesByGender(String gender);
     List<Employee> findEmolyeesByPage(Pageable pageable);
+    Employee addEmployee(Employee employee);
+
 }
