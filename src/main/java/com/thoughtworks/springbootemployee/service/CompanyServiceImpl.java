@@ -18,11 +18,6 @@ public class CompanyServiceImpl  implements  CompanyService{
     }
 
     @Override
-    public List<Company> findAllCompanies() {
-        return companyRepository.findAll();
-    }
-
-    @Override
     public Company findCompanyById(int companyId) {
         return companyRepository.findById(companyId).get();
     }

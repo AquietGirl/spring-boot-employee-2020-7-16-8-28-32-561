@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface CompanyService {
 
-        List<Company> findAllCompanies();
         Company findCompanyById(int companyId);
         List<Company> findCompaniesByPage(Pageable pageable);
         List<Employee> findEmployeesByCompanyId(int companyId);
