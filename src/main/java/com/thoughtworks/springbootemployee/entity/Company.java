@@ -17,5 +17,29 @@ public class Company {
     public Company() {
 
     }
+
+    public Integer getCompany_id() {
+        return company_id;
+    }
+
+    public void setCompany_id(Integer company_id) {
+        this.company_id = company_id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
 }
 

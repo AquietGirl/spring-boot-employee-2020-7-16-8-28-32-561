@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.controller;
 
 
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.service.EmployeeService;
 import com.thoughtworks.springbootemployee.service.EmployeeServiceImpl;
 import javafx.beans.DefaultProperty;
 import org.springframework.data.domain.Page;
@@ -16,9 +17,9 @@ import java.util.List;
 @RequestMapping("/employees")
 public class EmployeeController {
 
-    private final EmployeeServiceImpl employeeService;
+    private final EmployeeService employeeService;
 
-    public EmployeeController(EmployeeServiceImpl employeeService) {
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
