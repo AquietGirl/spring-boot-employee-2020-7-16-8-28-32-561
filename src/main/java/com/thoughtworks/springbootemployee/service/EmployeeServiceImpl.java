@@ -25,4 +25,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee findEmployeeById(int id) {
         return employeeRepository.findById(id).get();
     }
+
+    @Override
+    public List<Employee> findEmployeeByGender(String gender) {
+        return employeeRepository.findByGender(gender);
+    }
 }
