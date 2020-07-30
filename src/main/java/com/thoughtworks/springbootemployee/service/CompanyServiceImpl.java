@@ -35,12 +35,10 @@ public class CompanyServiceImpl  implements  CompanyService{
     @Override
     public Company addCompany(Company company) {
         Company companyResult = companyRepository.save(company);
-        if (companyResult == null) {
-            new AddWrongException();
-        }
         return companyResult;
     }
 
+    // TODO
     @Override
     public Company updateCompany(Company company) {
         return companyRepository.save(company);
