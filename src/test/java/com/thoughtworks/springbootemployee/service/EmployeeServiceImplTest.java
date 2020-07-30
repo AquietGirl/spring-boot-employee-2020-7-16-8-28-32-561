@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.dto.RequestEmployee;
+import com.thoughtworks.springbootemployee.dto.ResponseEmployee;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -58,7 +59,7 @@ class EmployeeServiceImplTest {
     }
 
     @Test
-    void should_employee_when_RequestEmployee_change_employee_given_requestEmployee(){
+    void should_true_when_request_employee_change_to_employee_given_requestEmployee(){
         //given
         int companyId = 1;
         String name = "Alisa";
@@ -85,6 +86,38 @@ class EmployeeServiceImplTest {
 
         //then
         assertNotNull(newEmployee);
+    }
+
+    @Test
+    void should_return_true_when_employee_change_to_response_employee_given_employee(){
+        //given
+        String name = "Yancy";
+        int id = 1;
+        String gender = "male";
+        int age = 18;
+        String companyName = "oocl";
+        Company company = new Company();
+        company.setName(companyName);
+        Employee employee = new Employee();
+        employee.setName(name);
+        employee.setId(id);
+        employee.setGender(gender);
+        employee.setAge(age);
+        employee.setCompany(company);
+
+        ResponseEmployee correctResonseEmployee = new ResponseEmployee();
+        correctResonseEmployee.setAge(age);
+        correctResonseEmployee.setGender(gender);
+        correctResonseEmployee.setEmployeeId(id);
+        correctResonseEmployee.setCompanyName(company.getName());
+        correctResonseEmployee.setName(name);
+
+
+        //when
+      ResponseEmployee responseEmployee = ResponseEmployee.to(employee);
+
+        //then
+        assertTrue(correctResonseEmployee.equals(responseEmployee));
     }
 
 
