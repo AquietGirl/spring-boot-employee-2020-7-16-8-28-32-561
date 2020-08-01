@@ -69,7 +69,13 @@ class CompanyServiceImplTest {
     }
 
     @Test
-    void updateCompany() {
+    void should_return_times_when_update_company_given_company() {
+        //when
+        companyService.updateCompany(1,new Company());
+
+        //then
+        verify(companyRepository , times(1)).save(any(Company.class));
+
     }
 
     @Test
