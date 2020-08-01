@@ -22,8 +22,9 @@ public class GlobalControllerExptionHander {
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public void handleNotFoundException() {
-
+    public @ResponseBody
+    String handleNotFoundException(NotFoundException exception) {
+        return exception.getMessage();
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

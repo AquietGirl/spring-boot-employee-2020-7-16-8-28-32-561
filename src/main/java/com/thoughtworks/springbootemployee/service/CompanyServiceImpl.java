@@ -20,8 +20,7 @@ public class CompanyServiceImpl  implements  CompanyService{
 
     @Override
     public Company findCompanyById(int companyId) {
-
-        return companyRepository.findById(companyId).orElseThrow(NotFoundException::new);
+        return companyRepository.findById(companyId).orElseThrow(() -> new NotFoundException("Can not find company by id."));
     }
 
     @Override
@@ -43,7 +42,7 @@ public class CompanyServiceImpl  implements  CompanyService{
 
     @Override
     public List<Employee> findEmployeesByCompanyId(int companyId){
-        return companyRepository.findById(companyId).orElseThrow(NotFoundException::new).getEmployees();
+        return companyRepository.findById(companyId).orElseThrow(() -> new NotFoundException("Can not find company by id.")).getEmployees();
     }
 
     @Override

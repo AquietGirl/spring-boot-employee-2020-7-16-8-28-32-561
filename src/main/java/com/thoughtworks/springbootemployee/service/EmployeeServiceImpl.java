@@ -29,7 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public ResponseEmployee findEmployeeById(int employeeId) {
-        Employee employee = employeeRepository.findById(employeeId).orElseThrow(NotFoundException::new);
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new NotFoundException("Can not find employee by id."));
         return ResponseEmployee.to(employee);
     }
 
@@ -52,7 +52,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee addEmployee(RequestEmployee requestEmployee) {
         Employee employee = RequestEmployee.to(requestEmployee);
-        Company company = companyRepository.findById(requestEmployee.getCompanyId()).orElseThrow(NotFoundException::new);
+        Company company = companyRepository.findById(requestEmployee.getCompanyId()).orElseThrow(() -> new NotFoundException("Can not find company."));
         employee.setCompany(company);
         return employeeRepository.save(employee);
     }
@@ -60,7 +60,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee updateEmployee(int employeeId, RequestEmployee requestEmployee) {
         Employee employee = RequestEmployee.to(requestEmployee);
-        Company company = companyRepository.findById(requestEmployee.getCompanyId()).orElseThrow(NotFoundException::new);
+        Company company = companyRepository.findById(requestEmployee.getCompanyId()).orElseThrow(() -> new NotFoundException("Can not find company."));
         employee.setId(employeeId);
         employee.setCompany(company);
         return employeeRepository.save(employee);
@@ -73,7 +73,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public Employee addEmployee2(RequestEmployee requestEmployee) {
         Employee employee = RequestEmployee.to(requestEmployee);
-        Company company = companyRepository.findById(requestEmployee.getCompanyId()).orElseThrow(NotFoundException::new);
+        Company company = companyRepository.findById(requestEmployee.getCompanyId()).orElseThrow(() -> new NotFoundException("Can not find company."));
         employee.setCompany(company);
         return employeeRepository.save(employee);
     }
