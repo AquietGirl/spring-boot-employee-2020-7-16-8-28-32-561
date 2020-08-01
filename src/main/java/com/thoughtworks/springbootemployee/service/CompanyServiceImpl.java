@@ -25,7 +25,11 @@ public class CompanyServiceImpl  implements  CompanyService{
 
     @Override
     public List<Company> findCompaniesByPage(Pageable pageable) {
-        return companyRepository.findAll(pageable).getContent();
+        List<Company> companies = companyRepository.findAll(pageable).getContent();
+        if(companies.isEmpty()){
+            throw  new NotFoundException("can't not find company by page");
+        }
+        return companies;
     }
 
     @Override

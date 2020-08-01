@@ -3,16 +3,23 @@ package com.thoughtworks.springbootemployee.service;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.exception.NotFoundException;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import org.aspectj.weaver.ast.Not;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static java.util.Optional.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
@@ -39,7 +46,17 @@ class CompanyServiceImplTest {
     }
 
     @Test
-    void findCompaniesByPage() {
+    void should_return_exception_when_find_company_by_page_given_page1_size1() {
+        //given
+        Pageable pageable = PageRequest.of(1,2);
+        when(companyRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(new ArrayList<>()));
+
+        //when
+        NotFoundException notFoundException = assertThrows(NotFoundException.class , () -> companyService.findCompaniesByPage(pageable));
+
+        //then
+        assertEquals("can't not find company by page" , notFoundException.getMessage());
+
     }
 
     @Test
