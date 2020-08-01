@@ -12,8 +12,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import javax.xml.ws.Response;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.Optional;
 import static java.util.Optional.of;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -42,7 +45,7 @@ class EmployeeServiceImplTest {
     @Test
     void should_return_name_when_find_employee_by_id_given_correct_employee_id() {
         //given
-        int employeeId =1;
+        int employeeId = 1;
         String emplyeeName = "Yancy";
         Employee employee = new Employee(employeeId);
         employee.setName(emplyeeName);
@@ -59,16 +62,16 @@ class EmployeeServiceImplTest {
     }
 
     @Test
-    void should_return_exception_when_find_employee_by_id_given_incorrect_employee_id (){
+    void should_return_exception_when_find_employee_by_id_given_incorrect_employee_id() {
         //given
         int employeeId = 1;
         when(employeeRepository.findById(employeeId)).thenReturn(Optional.empty());
 
         //when
-        Throwable notFoundException = assertThrows(NotFoundException.class , () -> employeeService.findEmployeeById(employeeId));
+        Throwable notFoundException = assertThrows(NotFoundException.class, () -> employeeService.findEmployeeById(employeeId));
 
         //then
-        assertEquals("Can not find employee by id." , notFoundException.getMessage());
+        assertEquals("Can not find employee by id.", notFoundException.getMessage());
     }
 
     @Test
@@ -90,14 +93,47 @@ class EmployeeServiceImplTest {
     }
 
     @Test
-    void should_return_exception_when_find_employee_by_gender_given_employee_gender (){
+    void should_return_exception_when_find_employee_by_gender_given_employee_gender() {
         //given
         when(employeeRepository.findByGender(anyString())).thenReturn(new ArrayList<>());
 
         //when
-        NotFoundException notFoundException = assertThrows(NotFoundException.class , () -> employeeService.findEmployeesByGender("male"));
+        NotFoundException notFoundException = assertThrows(NotFoundException.class, () -> employeeService.findEmployeesByGender("male"));
 
         //then
-        assertEquals("Can not find employee by gender." , notFoundException.getMessage());
+        assertEquals("Can not find employee by gender.", notFoundException.getMessage());
+    }
+
+    @Test
+    void should_return_employees_size_when_find_employees_by_page_given_page_1_and_size_2() {
+        //given
+        Company company = new Company();
+        List<Employee> employees = new ArrayList<>();
+        for(int i = 1; i <= 2 ; i ++){
+            Employee employee = new Employee(i);
+            employee.setCompany(company);
+            employees.add(employee);
+        }
+        Pageable pageable = PageRequest.of(1,2);
+        when(employeeRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(employees));
+
+        //when
+        int result = employeeService.findEmolyeesByPage(pageable).size();
+
+        //then
+        assertEquals(2, result);
+    }
+
+    @Test
+    void should_return_exception_when_find_employees_by_page_given_page1_size2(){
+        //given
+        Pageable pageable = PageRequest.of(1 , 2);
+        when(employeeRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(new ArrayList<>()));
+
+        //when
+        NotFoundException notFoundException = assertThrows(NotFoundException.class , () -> employeeService.findEmolyeesByPage(pageable));
+
+        //then
+        assertEquals("Can not find employee by page", notFoundException.getMessage());
     }
 }

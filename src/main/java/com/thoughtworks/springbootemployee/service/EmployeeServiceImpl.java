@@ -47,6 +47,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<ResponseEmployee> findEmolyeesByPage(Pageable pageable) {
         List<Employee> employees = employeeRepository.findAll(pageable).getContent();
+        if (employees.isEmpty()) {
+            throw new NotFoundException("Can not find employee by page");
+        }
         List<ResponseEmployee> responseEmployees = new ArrayList<>();
         employees.forEach(employee -> responseEmployees.add(ResponseEmployee.to(employee)));
         return responseEmployees;
