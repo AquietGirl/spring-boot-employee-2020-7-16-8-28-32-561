@@ -150,4 +150,27 @@ class EmployeeServiceImplTest {
         //then
         verify(employeeRepository, times(1)).save(any(Employee.class));
     }
+
+    @Test
+    void should_return_times_when_update_employee_given_employee() {
+        //given
+        RequestEmployee requestEmployee = new RequestEmployee();
+        requestEmployee.setCompanyId(1);
+        when(employeeRepository.save(any())).thenReturn(new Employee());
+        when(companyRepository.findById(anyInt())).thenReturn(of(new Company()));
+
+        //when
+        employeeService.updateEmployee(1, requestEmployee);
+
+        //then
+        verify(employeeRepository, times(1)).save(any(Employee.class));
+    }
+
+    @Test
+    void should_return_times_when_delete_employee_given_employee_id() {
+        //when
+        employeeService.deleteEmployee(1);
+        //then
+        verify(employeeRepository, times(1)).deleteById(1);
+    }
 }
