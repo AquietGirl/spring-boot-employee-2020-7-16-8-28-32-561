@@ -15,11 +15,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.xml.ws.Response;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static java.util.Optional.of;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -59,9 +62,6 @@ class EmployeeServiceImplTest {
     void should_return_exception_when_find_employee_by_id_given_incorrect_employee_id (){
         //given
         int employeeId = 1;
-        Employee employee = new Employee(employeeId);
-        Company company = new Company();
-        employee.setCompany(company);
         when(employeeRepository.findById(employeeId)).thenReturn(Optional.empty());
 
         //when
@@ -71,5 +71,33 @@ class EmployeeServiceImplTest {
         assertEquals("Can not find employee by id." , notFoundException.getMessage());
     }
 
+    @Test
+    void should_return_employee_size_when_find_employee_by_gender_given_employee_gender() {
+        //given
+        Company company = new Company();
+        Employee employee = new Employee();
+        employee.setGender("male");
+        employee.setCompany(company);
+        List<Employee> employees = new ArrayList<>();
+        employees.add(employee);
+        when(employeeRepository.findByGender(anyString())).thenReturn(employees);
 
+        //when
+        int result = employeeService.findEmployeesByGender("male").size();
+
+        //then
+        assertEquals(1, result);
+    }
+
+    @Test
+    void should_return_exception_when_find_employee_by_gender_given_employee_gender (){
+        //given
+        when(employeeRepository.findByGender(anyString())).thenReturn(new ArrayList<>());
+
+        //when
+        NotFoundException notFoundException = assertThrows(NotFoundException.class , () -> employeeService.findEmployeesByGender("male"));
+
+        //then
+        assertEquals("Can not find employee by gender." , notFoundException.getMessage());
+    }
 }

@@ -36,6 +36,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<ResponseEmployee> findEmployeesByGender(String gender) {
         List<Employee> employees = employeeRepository.findByGender(gender);
+        if (employees.isEmpty()) {
+            throw new NotFoundException("Can not find employee by gender.");
+        }
         List<ResponseEmployee> responseEmployees = new ArrayList<>();
         employees.forEach(employee -> responseEmployees.add(ResponseEmployee.to(employee)));
         return responseEmployees;
