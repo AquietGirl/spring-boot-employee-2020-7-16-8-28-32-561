@@ -48,14 +48,14 @@ class CompanyServiceImplTest {
     @Test
     void should_return_exception_when_find_company_by_page_given_page1_size1() {
         //given
-        Pageable pageable = PageRequest.of(1,2);
+        Pageable pageable = PageRequest.of(1, 2);
         when(companyRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(new ArrayList<>()));
 
         //when
-        NotFoundException notFoundException = assertThrows(NotFoundException.class , () -> companyService.findCompaniesByPage(pageable));
+        NotFoundException notFoundException = assertThrows(NotFoundException.class, () -> companyService.findCompaniesByPage(pageable));
 
         //then
-        assertEquals("can't not find company by page" , notFoundException.getMessage());
+        assertEquals("can't not find company by page", notFoundException.getMessage());
 
     }
 
@@ -65,21 +65,26 @@ class CompanyServiceImplTest {
         companyService.addCompany(new Company());
 
         //then
-        verify(companyRepository , times(1)).save(any(Company.class));
+        verify(companyRepository, times(1)).save(any(Company.class));
     }
 
     @Test
     void should_return_times_when_update_company_given_company() {
         //when
-        companyService.updateCompany(1,new Company());
+        companyService.updateCompany(1, new Company());
 
         //then
-        verify(companyRepository , times(1)).save(any(Company.class));
+        verify(companyRepository, times(1)).save(any(Company.class));
 
     }
 
     @Test
-    void findEmployeesByCompanyId() {
+    void should_return_times_when_delete_company_give_company_id() {
+        //when
+        companyService.deleteCompany(1);
+
+        //then
+        verify(companyRepository, times(1)).deleteById(anyInt());
     }
 
     @Test
