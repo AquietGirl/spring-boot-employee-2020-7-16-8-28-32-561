@@ -36,8 +36,8 @@ public class CompanyController {
         return companyService.addCompany(company);
     }
 
-    @PutMapping
-    public Company updateCompany(@RequestBody Company company) {
+    @PutMapping("{companyId}")
+    public Company updateCompany(@PathVariable  int companyId ,@RequestBody Company company) {
         return companyService.updateCompany(company);
     }
 

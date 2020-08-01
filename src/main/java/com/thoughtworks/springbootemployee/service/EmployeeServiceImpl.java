@@ -26,8 +26,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     @Override
-    public Employee findEmployeeById(int id) {
-        return employeeRepository.findById(id).orElseThrow(NotFoundException::new);
+    public Employee findEmployeeById(int employeeId) {
+        return employeeRepository.findById(employeeId).orElseThrow(NotFoundException::new);
     }
 
     @Override
@@ -45,17 +45,21 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = RequestEmployee.to(requestEmployee);
         Company company = companyRepository.findById(requestEmployee.getCompanyId()).orElseThrow(NotFoundException::new);
         employee.setCompany(company);
-        return employee;
-    }
-
-    @Override
-    public Employee updateEmployee(Employee employee) {
         return employeeRepository.save(employee);
     }
 
     @Override
-    public void deleteEmployee(int id) {
-        employeeRepository.deleteById(id);
+    public Employee updateEmployee(int employeeId, RequestEmployee requestEmployee) {
+        Employee employee = RequestEmployee.to(requestEmployee);
+        Company company = companyRepository.findById(requestEmployee.getCompanyId()).orElseThrow(NotFoundException::new);
+        employee.setId(employeeId);
+        employee.setCompany(company);
+        return employeeRepository.save(employee);
+    }
+
+    @Override
+    public void deleteEmployee(int employeeId) {
+        employeeRepository.deleteById(employeeId);
     }
 
     public Employee addEmployee2(RequestEmployee requestEmployee) {

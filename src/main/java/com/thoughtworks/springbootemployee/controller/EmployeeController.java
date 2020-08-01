@@ -1,16 +1,13 @@
 package com.thoughtworks.springbootemployee.controller;
 
 
+import com.thoughtworks.springbootemployee.dto.RequestEmployee;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
-import com.thoughtworks.springbootemployee.service.EmployeeServiceImpl;
-import javafx.beans.DefaultProperty;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -24,9 +21,9 @@ public class EmployeeController {
     }
 
 
-    @GetMapping("/{id}")
-    public Employee findEmployeeById(@PathVariable int id) {
-        return employeeService.findEmployeeById(id);
+    @GetMapping("/{employeeId}")
+    public Employee findEmployeeById(@PathVariable int employeeId) {
+        return employeeService.findEmployeeById(employeeId);
     }
 
     @GetMapping(params = "gender")
@@ -43,18 +40,18 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public Employee addEmployee(@RequestBody Employee employee) {
-        return employeeService.addEmployee(employee);
+    public Employee addEmployee(@RequestBody RequestEmployee requestEmployee) {
+        return employeeService.addEmployee(requestEmployee);
     }
 
-    @PutMapping
-    public Employee updateEmployee(@RequestBody Employee employee) {
-        return employeeService.updateEmployee(employee);
+    @PutMapping("{employeeId}")
+    public Employee updateEmployee(@PathVariable int employeeId, @RequestBody RequestEmployee requestEmployee) {
+        return employeeService.updateEmployee(employeeId, requestEmployee);
     }
 
 
-    @DeleteMapping("{id}")
-    public void deleteEmployee(@PathVariable int id) {
-        employeeService.deleteEmployee(id);
+    @DeleteMapping("{employeeId}")
+    public void deleteEmployee(@PathVariable int employeeId) {
+        employeeService.deleteEmployee(employeeId);
     }
 }
