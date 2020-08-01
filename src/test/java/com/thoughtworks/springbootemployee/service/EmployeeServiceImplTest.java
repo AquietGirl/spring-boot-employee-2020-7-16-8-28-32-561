@@ -24,9 +24,8 @@ import java.util.Optional;
 import static java.util.Optional.of;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeServiceImplTest {
@@ -135,5 +134,20 @@ class EmployeeServiceImplTest {
 
         //then
         assertEquals("Can not find employee by page", notFoundException.getMessage());
+    }
+
+    @Test
+    void should_return_times_when_add_employee_given_employee() {
+        //given
+        RequestEmployee requestEmployee = new RequestEmployee();
+        requestEmployee.setCompanyId(1);
+        when(employeeRepository.save(any())).thenReturn(new Employee());
+        when(companyRepository.findById(anyInt())).thenReturn(of(new Company()));
+
+        //when
+        employeeService.addEmployee(requestEmployee);
+
+        //then
+        verify(employeeRepository, times(1)).save(any(Employee.class));
     }
 }

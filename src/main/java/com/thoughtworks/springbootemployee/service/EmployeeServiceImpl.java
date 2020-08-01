@@ -76,11 +76,4 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteEmployee(int employeeId) {
         employeeRepository.deleteById(employeeId);
     }
-
-    public Employee addEmployee2(RequestEmployee requestEmployee) {
-        Employee employee = RequestEmployee.to(requestEmployee);
-        Company company = companyRepository.findById(requestEmployee.getCompanyId()).orElseThrow(() -> new NotFoundException("Can not find company."));
-        employee.setCompany(company);
-        return employeeRepository.save(employee);
-    }
 }

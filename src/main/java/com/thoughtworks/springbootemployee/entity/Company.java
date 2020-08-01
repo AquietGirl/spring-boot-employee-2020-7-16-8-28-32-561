@@ -18,6 +18,10 @@ public class Company {
 
     }
 
+
+    public Company(String name) {
+        this.name = name;
+    }
     public Integer getCompanyId() {
         return companyId;
     }
