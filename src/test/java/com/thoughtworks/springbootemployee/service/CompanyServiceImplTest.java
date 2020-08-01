@@ -21,7 +21,7 @@ import static java.util.Optional.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CompanyServiceImplTest {
@@ -60,7 +60,12 @@ class CompanyServiceImplTest {
     }
 
     @Test
-    void addCompany() {
+    void should_return_times_when_add_company_given_company() {
+        //when
+        companyService.addCompany(new Company());
+
+        //then
+        verify(companyRepository , times(1)).save(any(Company.class));
     }
 
     @Test
