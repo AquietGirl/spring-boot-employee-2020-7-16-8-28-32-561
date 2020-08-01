@@ -10,8 +10,8 @@ import org.springframework.data.domain.Pageable;
 public interface EmployeeService {
 
     ResponseEmployee findEmployeeById(int employeeId);
-    List<Employee> findEmployeesByGender(String gender);
-    List<Employee> findEmolyeesByPage(Pageable pageable);
+    List<ResponseEmployee> findEmployeesByGender(String gender);
+    List<ResponseEmployee> findEmolyeesByPage(Pageable pageable);
     Employee addEmployee(RequestEmployee requestEmployee);
     Employee updateEmployee(int employeeId, RequestEmployee requestEmployee);
     void deleteEmployee(int id);

@@ -28,12 +28,12 @@ public class EmployeeController {
     }
 
     @GetMapping(params = "gender")
-    public List<Employee> findEmployeesByGender(@RequestParam String gender) {
+    public List<ResponseEmployee> findEmployeesByGender(@RequestParam String gender) {
         return employeeService.findEmployeesByGender(gender);
     }
 
     @GetMapping
-    public List<Employee> findEmolyeesByPage(@PageableDefault(size = 2) Pageable pageable, @RequestParam(required = false, defaultValue = "true") boolean isSelectAll) {
+    public List<ResponseEmployee> findEmolyeesByPage(@PageableDefault(size = 2) Pageable pageable, @RequestParam(required = false, defaultValue = "true") boolean isSelectAll) {
         if (isSelectAll) {
             return employeeService.findEmolyeesByPage(Pageable.unpaged());
         }

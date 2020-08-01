@@ -10,6 +10,7 @@ import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,13 +34,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> findEmployeesByGender(String gender) {
-        return employeeRepository.findByGender(gender);
+    public List<ResponseEmployee> findEmployeesByGender(String gender) {
+        List<Employee> employees = employeeRepository.findByGender(gender);
+        List<ResponseEmployee> responseEmployees = new ArrayList<>();
+        employees.forEach(employee -> responseEmployees.add(ResponseEmployee.to(employee)));
+        return responseEmployees;
     }
 
     @Override
-    public List<Employee> findEmolyeesByPage(Pageable pageable) {
-        return employeeRepository.findAll(pageable).getContent();
+    public List<ResponseEmployee> findEmolyeesByPage(Pageable pageable) {
+        List<Employee> employees = employeeRepository.findAll(pageable).getContent();
+        List<ResponseEmployee> responseEmployees = new ArrayList<>();
+        employees.forEach(employee -> responseEmployees.add(ResponseEmployee.to(employee)));
+        return responseEmployees;
     }
 
     @Override
