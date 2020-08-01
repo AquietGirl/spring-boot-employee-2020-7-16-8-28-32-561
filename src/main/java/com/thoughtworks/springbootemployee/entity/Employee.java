@@ -30,7 +30,7 @@ public class Employee {
     }
 
     public Employee(int id) {
-
+        this.id = id;
     }
 
     public Integer getId() {
