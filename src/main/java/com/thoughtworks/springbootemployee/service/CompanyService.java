@@ -11,7 +11,7 @@ public interface CompanyService {
 
         Company findCompanyById(int companyId);
         List<Company> findCompaniesByPage(Pageable pageable);
-        List<Employee> findEmployeesByCompanyId(int companyId) throws NotFoundException;
+        List<Employee> findEmployeesByCompanyId(int companyId);
         Company addCompany(Company company);
         Company updateCompany(int companyId, Company company);
         void deleteCompany(int companyId);

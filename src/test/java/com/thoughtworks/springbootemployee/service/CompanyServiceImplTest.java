@@ -88,6 +88,14 @@ class CompanyServiceImplTest {
     }
 
     @Test
-    void deleteCompany() {
+    void should_reutrn_exception_when_find_employees_by_company_id_given_company_id(){
+        //given
+        when(companyRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+        //when
+        NotFoundException notFoundException = assertThrows(NotFoundException.class , () -> companyService.findEmployeesByCompanyId(anyInt()));
+
+        //then
+        assertEquals("Can not find company by id." , notFoundException.getMessage());
     }
 }
