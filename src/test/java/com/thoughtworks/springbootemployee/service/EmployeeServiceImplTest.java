@@ -6,21 +6,17 @@ import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
-import org.hibernate.service.spi.InjectService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.Optional.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -71,7 +67,7 @@ class EmployeeServiceImplTest {
         requestEmployee.setGender(gender);
         requestEmployee.setAge(age);
         Company company = new Company();
-        company.setCompany_id(companyId);
+        company.setCompanyId(companyId);
         Employee employee = new Employee();
         employee.setCompany(company);
         employee.setAge(age);

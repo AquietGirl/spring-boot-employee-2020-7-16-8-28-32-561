@@ -9,7 +9,7 @@ import java.util.List;
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer company_id;
+    private Integer companyId;
     private String name;
     @OneToMany(mappedBy = "company")
     private List<Employee> employees;
@@ -18,12 +18,12 @@ public class Company {
 
     }
 
-    public Integer getCompany_id() {
-        return company_id;
+    public Integer getCompanyId() {
+        return companyId;
     }
 
-    public void setCompany_id(Integer company_id) {
-        this.company_id = company_id;
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 
     public String getName() {

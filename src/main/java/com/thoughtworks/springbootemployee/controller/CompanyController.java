@@ -38,7 +38,7 @@ public class CompanyController {
 
     @PutMapping("{companyId}")
     public Company updateCompany(@PathVariable  int companyId ,@RequestBody Company company) {
-        return companyService.updateCompany(company);
+        return companyService.updateCompany(companyId, company);
     }
 
     @GetMapping("/{companyId}/employees")

@@ -13,6 +13,6 @@ public interface CompanyService {
         List<Company> findCompaniesByPage(Pageable pageable);
         List<Employee> findEmployeesByCompanyId(int companyId) throws NotFoundException;
         Company addCompany(Company company);
-        Company updateCompany(Company company);
+        Company updateCompany(int companyId, Company company);
         void deleteCompany(int companyId);
 }

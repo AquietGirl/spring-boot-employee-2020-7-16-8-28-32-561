@@ -1,12 +1,9 @@
 package com.thoughtworks.springbootemployee.service;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
-import com.thoughtworks.springbootemployee.exception.AddWrongException;
 import com.thoughtworks.springbootemployee.exception.NotFoundException;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
-import javassist.compiler.NoFieldException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -38,9 +35,9 @@ public class CompanyServiceImpl  implements  CompanyService{
         return companyResult;
     }
 
-    // TODO
     @Override
-    public Company updateCompany(Company company) {
+    public Company updateCompany(int companyId, Company company) {
+        company.setCompanyId(companyId);
         return companyRepository.save(company);
 }
 
