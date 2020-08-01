@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.controller;
 
 
 import com.thoughtworks.springbootemployee.dto.RequestEmployee;
+import com.thoughtworks.springbootemployee.dto.ResponseEmployee;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +23,7 @@ public class EmployeeController {
 
 
     @GetMapping("/{employeeId}")
-    public Employee findEmployeeById(@PathVariable int employeeId) {
+    public ResponseEmployee findEmployeeById(@PathVariable int employeeId) {
         return employeeService.findEmployeeById(employeeId);
     }
 

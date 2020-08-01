@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.dto.RequestEmployee;
+import com.thoughtworks.springbootemployee.dto.ResponseEmployee;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.exception.NotFoundException;
@@ -26,8 +27,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     @Override
-    public Employee findEmployeeById(int employeeId) {
-        return employeeRepository.findById(employeeId).orElseThrow(NotFoundException::new);
+    public ResponseEmployee findEmployeeById(int employeeId) {
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(NotFoundException::new);
+        return ResponseEmployee.to(employee);
     }
 
     @Override
