@@ -18,8 +18,7 @@ import java.awt.print.Pageable;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -110,5 +109,34 @@ public class EmployeeIntegrationTest {
 
         mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(employeeJson))
                 .andExpect(status().isCreated()).andExpect(jsonPath("name").value("Yancy"));
+    }
+
+    @Test
+    void should_return_employee_when_update_employee_given_employee() throws Exception {
+        Company company = new Company();
+        int companyId = companyRepository.save(company).getCompanyId();
+        Employee employee = new Employee();
+        employee.setName("Alisa");
+        int employeeId = employeeRepository.save(employee).getId();
+        String employeeJson = "{\n" +
+                "        \"name\": \"Yancy\",\n" +
+                "        \"gender\": \"male\",\n" +
+                "        \"age\": 15,\n" +
+                "        \"companyId\" : " + companyId + "\n" +
+                "    }";
+
+        mockMvc.perform(put("/employees/" + employeeId).contentType(MediaType.APPLICATION_JSON).content(employeeJson))
+                .andExpect(status().isOk()).andExpect(jsonPath("name").value("Yancy"));
+    }
+
+    @Test
+    void should_return_employee_when_delete_employee_given_employee() throws Exception {
+        Company company = new Company();
+        companyRepository.save(company).getCompanyId();
+        Employee employee = new Employee();
+        int employeeId = employeeRepository.save(employee).getId();
+
+        mockMvc.perform(delete("/employees/" + employeeId))
+                .andExpect(status().isOk());
     }
 }
