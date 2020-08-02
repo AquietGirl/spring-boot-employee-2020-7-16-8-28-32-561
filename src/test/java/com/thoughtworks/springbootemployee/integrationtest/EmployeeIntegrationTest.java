@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.awt.print.Pageable;
@@ -18,6 +19,7 @@ import java.awt.print.Pageable;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -93,5 +95,20 @@ public class EmployeeIntegrationTest {
 
         mockMvc.perform(get("/employees"))
                 .andExpect(status().isOk()).andExpect(jsonPath("*", hasSize(2)));
+    }
+
+    @Test
+    void should_return_employee_when_add_employee_given_employee() throws Exception {
+        Company company = new Company();
+        int companyId = companyRepository.save(company).getCompanyId();
+        String employeeJson = "{\n" +
+                "        \"name\": \"Yancy\",\n" +
+                "        \"gender\": \"male\",\n" +
+                "        \"age\": 15,\n" +
+                "        \"companyId\" : " + companyId + "\n" +
+                "    }";
+
+        mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(employeeJson))
+                .andExpect(status().isCreated()).andExpect(jsonPath("name").value("Yancy"));
     }
 }
