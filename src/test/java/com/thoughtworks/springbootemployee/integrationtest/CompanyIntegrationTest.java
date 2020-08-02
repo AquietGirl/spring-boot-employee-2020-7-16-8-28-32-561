@@ -12,7 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.naming.CompositeName;
+
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -97,5 +100,14 @@ public class CompanyIntegrationTest {
                 .content(companyJson))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name").value("OOCL"));
+    }
+
+    @Test
+    void should_return_true_when_delete_company_by_companyId_given_companyId() throws Exception {
+        Company company = new Company();
+        int companyId = companyRepository.save(company).getCompanyId();
+        mockMvc.perform(delete("/companies/" + companyId))
+                .andExpect(status().isOk());
+        assertTrue(companyRepository.findAll().isEmpty());
     }
 }
