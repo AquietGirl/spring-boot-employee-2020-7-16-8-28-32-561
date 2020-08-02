@@ -13,8 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -46,33 +45,33 @@ public class CompanyIntegrationTest {
     }
 
     @Test
-    void should_return_company_when_find_company_by_page_given_page1_and_size1() throws  Exception{
+    void should_return_company_when_find_company_by_page_given_page1_and_size1() throws Exception {
         Company company1 = new Company();
         Company company2 = new Company();
         companyRepository.save(company1);
         int companyId2 = companyRepository.save(company2).getCompanyId();
         mockMvc.perform(get("/companies")
-                .param("page" , "1")
-                .param("size" , "1")
-                .param("isSelectAll","false"))
+                .param("page", "1")
+                .param("size", "1")
+                .param("isSelectAll", "false"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("*" , hasSize(1)))
+                .andExpect(jsonPath("*", hasSize(1)))
                 .andExpect(jsonPath("[0].companyId").value(companyId2));
     }
 
     @Test
-    void should_return_company_when_find_company_by_page() throws  Exception{
+    void should_return_company_when_find_company_by_page() throws Exception {
         Company company1 = new Company();
         Company company2 = new Company();
         companyRepository.save(company1);
         int companyId2 = companyRepository.save(company2).getCompanyId();
         mockMvc.perform(get("/companies"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("*" , hasSize(2)));
+                .andExpect(jsonPath("*", hasSize(2)));
     }
 
     @Test
-    void should_return_company_when_add_company_gien_company() throws  Exception{
+    void should_return_company_when_add_company_gien_company() throws Exception {
         String companyJson = "{\n" +
                 "                \"name\": \"aaa\"\n" +
                 "    }";
@@ -83,5 +82,20 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("name")
                         .value("aaa"));
 
+    }
+
+    @Test
+    void should_return_company_when_update_company_given_new_company_name() throws Exception {
+        Company company = new Company();
+        company.setName("tw");
+        int companyId = companyRepository.save(company).getCompanyId();
+        String companyJson = "{\n" +
+                "                \"name\": \"OOCL\"\n" +
+                "    }";
+        mockMvc.perform(put("/companies/" + companyId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(companyJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("name").value("OOCL"));
     }
 }
