@@ -32,7 +32,7 @@ public class EmployeeIntegrationTest {
     private CompanyRepository companyRepository;
 
     @AfterEach
-    private void cleanUp(){
+    private void cleanUp() {
         employeeRepository.deleteAll();
         companyRepository.deleteAll();
     }
@@ -48,6 +48,18 @@ public class EmployeeIntegrationTest {
         int employeeId = employeeRepository.save(employee).getId();
 
         mockMvc.perform(get("/employees/" + employeeId)).andExpect(status().isOk()).andExpect(jsonPath("name").value("Yancy"));
+    }
+
+    @Test
+    void should_return_employee_when_find_employee_by_gender_given_employee_gender() throws Exception {
+        Employee employee = new Employee();
+        employee.setGender("male");
+        Company company = new Company();
+        companyRepository.save(company);
+        employee.setCompany(company);
+        employeeRepository.save(employee);
+
+        mockMvc.perform(get("/employees").param("gender", "male")).andExpect(status().isOk()).andExpect(jsonPath("[0]").exists());
     }
 
 }
