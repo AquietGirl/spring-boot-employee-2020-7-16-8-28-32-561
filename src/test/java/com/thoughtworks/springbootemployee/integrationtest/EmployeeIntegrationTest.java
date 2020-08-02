@@ -13,6 +13,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.awt.print.Pageable;
+
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -62,4 +65,33 @@ public class EmployeeIntegrationTest {
         mockMvc.perform(get("/employees").param("gender", "male")).andExpect(status().isOk()).andExpect(jsonPath("[0]").exists());
     }
 
+    @Test
+    void should_return_employees_when_find_employee_by_page_given_employee_page() throws Exception {
+        Employee employee1 = new Employee();
+        Employee employee2 = new Employee();
+        Company company = new Company();
+        companyRepository.save(company);
+        employee1.setCompany(company);
+        employee2.setCompany(company);
+        employeeRepository.save(employee1);
+        int employee2Id = employeeRepository.save(employee2).getId();
+
+        mockMvc.perform(get("/employees").param("page", "1").param("size", "1").param("isSelectAll", "false"))
+                .andExpect(status().isOk()).andExpect(jsonPath("[0].employeeId").value(employee2Id)).andExpect(jsonPath("*", hasSize(1)));
+    }
+
+    @Test
+    void should_return_employees_when_find_employee_by_page_given_employee_unpage() throws Exception {
+        Employee employee1 = new Employee();
+        Employee employee2 = new Employee();
+        Company company = new Company();
+        companyRepository.save(company);
+        employee1.setCompany(company);
+        employee2.setCompany(company);
+        employeeRepository.save(employee1);
+        employeeRepository.save(employee2);
+
+        mockMvc.perform(get("/employees"))
+                .andExpect(status().isOk()).andExpect(jsonPath("*", hasSize(2)));
+    }
 }
