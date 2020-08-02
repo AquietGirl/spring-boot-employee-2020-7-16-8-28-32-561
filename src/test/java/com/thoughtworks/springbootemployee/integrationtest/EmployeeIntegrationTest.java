@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -46,8 +47,7 @@ public class EmployeeIntegrationTest {
         employee.setCompany(company);
         int employeeId = employeeRepository.save(employee).getId();
 
-        mockMvc.perform(get("/employees/" + employeeId)).andExpect(status().isOk());
+        mockMvc.perform(get("/employees/" + employeeId)).andExpect(status().isOk()).andExpect(jsonPath("name").value("Yancy"));
     }
-
 
 }
